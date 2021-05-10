@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Net;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace ReactDemo.Controllers
 {
@@ -38,21 +42,27 @@ namespace ReactDemo.Controllers
         public ActionResult ThisIsYou()
         {
             // return the host of whoever sent the request
-            return Ok();
+            
+            return Ok(Request.Host.Value);
         }
 
         [HttpPost("you-sent-me-this")]
-        public ActionResult YouSentMeThis()
+        public async Task<ActionResult> YouSentMeThis()
         {
-            // return the json in the request body
-            return Ok();
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var hej = await reader.ReadToEndAsync();
+                return Ok(hej);
+            }
         }
 
         [HttpPost("i-only-answer-if-i-know-who-you-are")]
-        public ActionResult IOnlyAnswerIfIKnowWhoYouAre()
+        public ActionResult IOnlyAnswerIfIKnowWhoYouAre(IFormCollection data)
         {
             // return Ok if "name" key exists in the body
-            if (true)
+
+
+            if (data.Keys.Contains("name"))
             {
                 return Ok();
             }
