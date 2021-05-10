@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ReactDemo.Controllers
 {
@@ -10,19 +7,46 @@ namespace ReactDemo.Controllers
     [Route("[controller]")]
     public class SodasController : ControllerBase
     {
-        private List<string> Sodas = new List<string>
+        private Dictionary<string, string> Sodas = new Dictionary<string, string>();
+
+        public SodasController()
         {
-            "Coca Cola",
-            "Fanta",
-            "Trocadero",
-            "Sprite"
-        };
+            Sodas.Add("1", "Cola");
+            Sodas.Add("2", "Fanta");
+            Sodas.Add("3", "Sprite");
+            Sodas.Add("4", "Trocadero");
+        }
 
 
         [HttpGet]
         public ActionResult GetAllSodas()
         {
             return Ok(Sodas);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetSpecificSoda(string id)
+        {
+            var sodaToReturn = Sodas[id];
+            return Ok(sodaToReturn);
+        }
+
+        [HttpPost]
+        public ActionResult AddSoda()
+        {
+            return Created("", "");
+        }
+
+        [HttpPut]
+        public ActionResult ReplaceSoda()
+        {
+            return Ok("This is the rout for replacing sodas");
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteSoda()
+        {
+            return NoContent();
         }
     }
 }
