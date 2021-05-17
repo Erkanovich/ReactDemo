@@ -1,12 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { Box } from './Box';
 
+// This component can be navigated to.
 export class Cool extends Component {
   constructor(props) {
     console.log(props);
     super(props);
   }
 
+  // renders the component
   render() {
     let allMyBoxes = [];
     for (let i = 0; i < 100; i++) {
