@@ -15,7 +15,16 @@ export class Contact extends Component {
 
   handleSubmit(event) {
     // here we will send the data to the server!
-    console.log("this is the state right now: ", this.state);
+    fetch('/contact', {
+      method: 'POST',
+      body: JSON.stringify(this.state)
+    }).then(response => {
+      console.log(response);
+      response.json().then(jsonContent => {
+        console.log(jsonContent);
+      });
+    });
+    
     event.preventDefault();
   }
 
