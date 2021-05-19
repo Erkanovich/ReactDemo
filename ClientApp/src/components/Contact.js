@@ -15,9 +15,12 @@ export class Contact extends Component {
 
   handleSubmit(event) {
     // here we will send the data to the server!
-    fetch('/contact', {
+    fetch('/contacts', {
       method: 'POST',
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(this.state),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }).then(response => {
       console.log(response);
       response.json().then(jsonContent => {
