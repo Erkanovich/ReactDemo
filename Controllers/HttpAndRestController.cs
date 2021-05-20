@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Net;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace ReactDemo.Controllers
@@ -42,7 +41,7 @@ namespace ReactDemo.Controllers
         public ActionResult ThisIsYou()
         {
             // return the host of whoever sent the request
-            
+
             return Ok(Request.Host.Value);
         }
 
