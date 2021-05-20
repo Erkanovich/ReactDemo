@@ -15,20 +15,20 @@ export class Contact extends Component {
 
   handleSubmit(event) {
     // here we will send the data to the server!
-    fetch('/contacts', {
+    this.sendTheData();
+    
+    event.preventDefault();
+  }
+
+  async sendTheData() {
+    let response = await fetch('/contacts', {
       method: 'POST',
       body: JSON.stringify(this.state),
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(response => {
-      console.log(response);
-      response.json().then(jsonContent => {
-        console.log(jsonContent);
-      });
     });
-    
-    event.preventDefault();
+    console.log(response);
   }
 
   handleInputChange(event) {
