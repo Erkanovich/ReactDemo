@@ -1,0 +1,7 @@
+﻿.box_of_doom {
+    height: 100px;
+    width: 100px;
+    background-color: green;
+    margin: 5px;
+    display: inline-block;
+}
