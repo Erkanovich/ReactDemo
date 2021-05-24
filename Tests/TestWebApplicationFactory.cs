@@ -14,7 +14,8 @@ namespace Tests
             var builder = Host.CreateDefaultBuilder()
                               .ConfigureWebHostDefaults(x =>
                               {
-                                  x.UseStartup<TestStartup>().UseTestServer();
+                                  x.UseStartup<TestStartup>()
+                                  .UseTestServer();
                               });
             return builder;
         }

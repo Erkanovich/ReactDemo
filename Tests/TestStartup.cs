@@ -18,12 +18,13 @@ namespace Tests
             services.AddDbContext<CurriculumVitaeDbContext>(options =>
             {
                 options.UseSqlite(CreateInMemoryDatabase());
-            });
+            }, ServiceLifetime.Singleton);
 
             services.AddAutoMapper(typeof(MappingConfiguration));
 
             services.AddControllers();
-            services.AddMvcCore().AddApplicationPart(Assembly.Load(new AssemblyName("ReactDemo")));
+            services.AddMvcCore()
+                .AddApplicationPart(Assembly.Load(new AssemblyName("ReactDemo")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +43,7 @@ namespace Tests
 
         private static DbConnection CreateInMemoryDatabase()
         {
-            var connection = new SqliteConnection("Filename=:memory:");
+            var connection = new SqliteConnection("DataSource=file::memory:?cache=shared");
             connection.Open();
             return connection;
         }
