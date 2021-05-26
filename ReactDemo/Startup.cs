@@ -1,11 +1,15 @@
 using Data;
+using Data.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReactDemo.Mappings;
+using System.Reflection;
 
 namespace ReactDemo
 {
@@ -22,6 +26,18 @@ namespace ReactDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.SetupDatabase(Configuration);
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<CurriculumVitaeDbContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, CurriculumVitaeDbContext>();
+
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddAutoMapper(typeof(MappingConfiguration));
 
@@ -54,11 +70,15 @@ namespace ReactDemo
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>
