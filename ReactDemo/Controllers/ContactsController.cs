@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Data;
 using Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace ReactDemo.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> ContactMe([FromBody] ContactMeRequest request)
         {

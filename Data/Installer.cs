@@ -10,7 +10,8 @@ namespace Data
         {
             services.AddDbContext<CurriculumVitaeDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("Default"));
+                options.UseSqlServer(configuration.GetConnectionString("Default"),
+                    ssoa => ssoa.MigrationsAssembly("Data"));
             });
         }
     }
